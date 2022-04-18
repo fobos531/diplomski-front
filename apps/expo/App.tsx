@@ -1,10 +1,11 @@
-import { NativeNavigation } from 'app/navigation/native'
-import { Provider } from 'app/provider'
+import { View, Text } from 'react-native';
 
-export default function App() {
+const App = () => {
   return (
-    <Provider>
-      <NativeNavigation />
-    </Provider>
-  )
-}
+    <View style={{ marginTop: 50 }}>
+      <Text>Bok</Text>
+    </View>
+  );
+};
+
+export default App;
