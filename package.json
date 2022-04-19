@@ -1,5 +1,5 @@
 {
-  "name": "solito-blank",
+  "name": "cinesimul-monorepo",
   "private": true,
   "workspaces": [
     "apps/*",
