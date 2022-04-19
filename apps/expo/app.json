@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "solito-blank",
-    "slug": "solito-blank",
+    "name": "cinesimul",
+    "slug": "cinesimul",
     "version": "1.0.0",
     "sdkVersion": "44.0.0",
-    "scheme": "solito-blank",
+    "scheme": "cinesimul",
     "platforms": ["ios", "android"],
     "ios": {
-      "bundleIdentifier": "com.solito.blank"
-    }
+      "bundleIdentifier": "com.jakovglavina.cinesimul"
+    },
+    "plugins": ["@config-plugins/react-native-webrtc"]
   }
 }
