@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@expo/next-adapter": "^3.1.20",
     "app": "*",
-    "next": "^12.1.5"
+    "next": "^12.1.5",
+    "next-auth": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
