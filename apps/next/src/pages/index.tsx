@@ -1,22 +1,12 @@
 import { NextPage } from 'next';
-import { useSession, signIn, signOut } from 'next-auth/react';
 
-const Comp: NextPage = () => {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
+const Home: NextPage = () => {
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <div>
+      <h1 className="text-3xl font-bold underline">CineSimul</h1>
+      <p>Welcome to CineSimul!</p>
+    </div>
   );
 };
 
-export default Comp;
+export default Home;
