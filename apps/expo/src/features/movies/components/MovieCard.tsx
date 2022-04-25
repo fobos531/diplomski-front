@@ -1,14 +1,20 @@
 import { View, Text, ImageBackground, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 
-const MovieCard: React.FC = ({ movie }) => {
+import { Movie } from 'app/features/movies/types';
+
+interface MovieCardProps {
+  movie: Movie;
+}
+
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
     <ImageBackground
       source={{ uri: `https://image.tmdb.org/t/p/w300${movie.poster_path}` }}
       style={styles.image}
       imageStyle={styles.imageStyle}>
       <BlurView style={styles.blurview}>
-        <Text style={styles.title}>{movie.title || movie.original_name}</Text>
+        <Text style={styles.title}>{movie.title || movie.original_title || movie.original_name}</Text>
       </BlurView>
     </ImageBackground>
   );

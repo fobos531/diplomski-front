@@ -4,11 +4,15 @@ import MoviesScreen from '@features/movies/MoviesScreen';
 import { QueryClientProvider } from 'react-query';
 
 import { queryClient } from 'app/misc/queryClient';
+import Navigation from '@navigation/Navigation';
+import TabNavigator from '@navigation/TabNavigator';
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MoviesScreen />
+      <Navigation>
+        <TabNavigator />
+      </Navigation>
     </QueryClientProvider>
   );
 };

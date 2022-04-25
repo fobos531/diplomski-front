@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 
 import { getMovies } from 'app/features/movies/api/movies';
@@ -13,11 +13,14 @@ const MoviesScreen: React.FC = () => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      {data?.results.map((movie) => (
-        <View key={movie.id} style={{ marginVertical: 10 }}>
-          <MovieCard movie={movie} />
-        </View>
-      ))}
+      <FlatList
+        data={data?.results || []}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <MovieCard movie={item} />}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+      />
     </ScrollView>
   );
 };

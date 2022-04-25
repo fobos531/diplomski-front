@@ -10,7 +10,7 @@ const Movies: NextPage = () => {
 
   return (
     <VideoBackground>
-      <div className="flex  content-center flex-wrap">
+      <div className="overflow-x-auto w-11/12 flex-row flex">
         {data && data.results.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
       </div>
     </VideoBackground>
