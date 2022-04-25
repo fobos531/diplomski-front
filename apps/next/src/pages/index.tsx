@@ -5,7 +5,7 @@ import VideoBackground from '@features/home/VideoBackground';
 const Home: NextPage = () => {
   return (
     <VideoBackground>
-      <div>
+      <div className="flex flex-col content-center">
         <h1 className="text-white text-center">CineSimul</h1>
         <h3 className="text-white text-center">Lose yourself in movies.</h3>
       </div>
