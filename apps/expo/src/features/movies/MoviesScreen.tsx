@@ -14,7 +14,9 @@ const MoviesScreen: React.FC = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       {data?.results.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
+        <View key={movie.id} style={{ marginVertical: 10 }}>
+          <MovieCard movie={movie} />
+        </View>
       ))}
     </ScrollView>
   );
