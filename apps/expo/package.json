@@ -11,6 +11,7 @@
     "expo-application": "~4.0.1",
     "expo-auth-session": "~3.5.0",
     "expo-av": "~10.2.0",
+    "expo-blur": "~11.0.0",
     "expo-dev-client": "~0.8.4",
     "expo-random": "~12.1.1",
     "expo-splash-screen": "~0.14.1",
