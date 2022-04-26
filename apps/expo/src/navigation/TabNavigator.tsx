@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import screen from '@navigation/screens';
 import MoviesScreen from '@features/movies/MoviesScreen';
@@ -11,9 +12,11 @@ const Tab = createBottomTabNavigator<TabNavigatorParamList>();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name={screen.HOME} component={MoviesScreen} />
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name={screen.HOME} component={MoviesScreen} />
+      </Tab.Navigator>
+    </SafeAreaView>
   );
 };
 
