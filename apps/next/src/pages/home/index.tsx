@@ -3,10 +3,10 @@ import { useQuery } from 'react-query';
 
 import VideoBackground from '@features/home/VideoBackground';
 import { getTrending } from 'app/features/titles/api/titles';
-import MovieCard from '@features/movies/components/MovieCard';
+import MovieCard from '@features/home/components/MovieCard';
 import { Title } from 'app/features/titles/types';
 
-const Movies: NextPage = () => {
+const Home: NextPage = () => {
   const { data: trendingMovies } = useQuery('trendingMovies', () => getTrending('movie'));
   const { data: trendingTVShows } = useQuery('trendingTVShows', () => getTrending('tv'));
 
@@ -29,4 +29,4 @@ const Movies: NextPage = () => {
   );
 };
 
-export default Movies;
+export default Home;

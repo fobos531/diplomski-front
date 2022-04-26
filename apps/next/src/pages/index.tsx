@@ -9,7 +9,7 @@ const Home: NextPage = () => {
       <div className="flex flex-col content-center">
         <h1 className="text-white text-center">CineSimul</h1>
         <h3 className="text-white text-center">Lose yourself in movies.</h3>
-        <Link href="/movies" passHref>
+        <Link href="/home" passHref>
           <button className="text-white">E boss</button>
         </Link>
       </div>

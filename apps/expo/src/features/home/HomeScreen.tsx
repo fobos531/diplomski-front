@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { TrendingList } from './components';
 import Spacer from '@common/Spacer';
 
-const MoviesScreen: React.FC = () => {
+const HomeScreen: React.FC = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <TrendingList type="movie" />
@@ -15,4 +15,4 @@ const MoviesScreen: React.FC = () => {
   );
 };
 
-export default MoviesScreen;
+export default HomeScreen;
