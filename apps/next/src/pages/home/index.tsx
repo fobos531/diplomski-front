@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 import VideoBackground from '@features/home/VideoBackground';
 import { getTrending } from 'app/features/titles/api/titles';
-import MovieCard from '@features/home/components/MovieCard';
+import TitleCard from '@features/home/components/TitleCard';
 import { Title } from 'app/features/titles/types';
 
 const Home: NextPage = () => {
@@ -15,14 +15,14 @@ const Home: NextPage = () => {
       <h1 className="text-white">Trending movies</h1>
       <div className="overflow-x-auto flex-row flex">
         {trendingMovies?.results.map((title: Title) => (
-          <MovieCard key={title.id} title={title} />
+          <TitleCard key={title.id} title={title} type="movie" />
         ))}
       </div>
 
       <h1 className="text-white">Trending TV Shows</h1>
       <div className="overflow-x-auto flex-row flex">
         {trendingTVShows?.results.map((title: Title) => (
-          <MovieCard key={title.id} title={title} />
+          <TitleCard key={title.id} title={title} type="tv" />
         ))}
       </div>
     </VideoBackground>

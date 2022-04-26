@@ -1,15 +1,28 @@
 import { Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 
 import { Title } from 'app/features/titles/types';
+import screen from '@navigation/screens';
 
-interface MovieCardProps {
+interface TitleCardProps {
   title: Title;
+  type: 'movie' | 'tv';
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ title }) => {
+const TitleCard: React.FC<TitleCardProps> = ({ title, type }) => {
+  const navigation = useNavigation();
+
+  const handleNavigate = () => {
+    if (type === 'movie') {
+      navigation.navigate(screen.MOVIE, { id: title.id });
+    } else {
+      navigation.navigate(screen.TV, { id: title.id });
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={handleNavigate}>
       <ImageBackground
         source={{ uri: `https://image.tmdb.org/t/p/w300${title.poster_path}` }}
         style={styles.image}
@@ -48,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieCard;
+export default TitleCard;

@@ -1,4 +1,4 @@
-import api from 'app/api/api';
+import api from 'app/api';
 
 export type TrendingType = 'all' | 'movie' | 'tv' | 'person';
 

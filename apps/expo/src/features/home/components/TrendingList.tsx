@@ -3,8 +3,9 @@ import { Text, View, FlatList } from 'react-native';
 import { useQuery } from 'react-query';
 import { getTrending } from 'app/features/titles/api/titles';
 
+import TitleCard from './TitleCard';
+
 import { fontSize } from '@constants/typography';
-import MovieCard from './MovieCard';
 
 interface TrendingListProps {
   type: 'movie' | 'tv';
@@ -21,7 +22,7 @@ const TrendingList: React.FC<TrendingListProps> = ({ type }) => {
       <FlatList
         data={data?.results || []}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <MovieCard title={item} />}
+        renderItem={({ item }) => <TitleCard title={item} type={type} />}
         horizontal
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

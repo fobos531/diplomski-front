@@ -1,2 +1,2 @@
-export { default as MovieCard } from './MovieCard';
+export { default as TitleCard } from './TitleCard';
 export { default as TrendingList } from './TrendingList';
