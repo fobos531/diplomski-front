@@ -1,21 +1,21 @@
 import { Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
 
-import { Movie } from 'app/features/movies/types';
+import { Title } from 'app/features/titles/types';
 
 interface MovieCardProps {
-  movie: Movie;
+  title: Title;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ title }) => {
   return (
     <TouchableOpacity onPress={() => {}}>
       <ImageBackground
-        source={{ uri: `https://image.tmdb.org/t/p/w300${movie.poster_path}` }}
+        source={{ uri: `https://image.tmdb.org/t/p/w300${title.poster_path}` }}
         style={styles.image}
         imageStyle={styles.imageStyle}>
         <BlurView style={styles.blurview}>
-          <Text style={styles.title}>{movie.title || movie.original_title || movie.original_name}</Text>
+          <Text style={styles.title}>{title.title || title.original_title || title.original_name}</Text>
         </BlurView>
       </ImageBackground>
     </TouchableOpacity>
