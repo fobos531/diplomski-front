@@ -5,10 +5,18 @@
     "version": "1.0.0",
     "sdkVersion": "44.0.0",
     "scheme": "cinesimul",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "ios": {
       "bundleIdentifier": "com.jakovglavina.cinesimul"
     },
-    "plugins": ["@config-plugins/react-native-webrtc"]
+    "plugins": [
+      "@config-plugins/react-native-webrtc"
+    ],
+    "android": {
+      "package": "com.jakovglavina.cinesimul"
+    }
   }
 }
