@@ -28,6 +28,15 @@ export interface Movie {
   videos: {
     results: Video[];
   };
+  images: {
+    /**
+     * Movie/TV Show id
+     */
+    id: number;
+    backdrops: Image[];
+    posters: Image[];
+    logos: Image[];
+  };
 }
 
 export interface Video {
@@ -44,6 +53,16 @@ export interface Video {
    */
   published_at: string;
   id: string;
+}
+
+export interface Image {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: string;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
 }
 
 export interface BelongsToCollection {
@@ -74,4 +93,27 @@ export interface SpokenLanguage {
   english_name: string;
   iso_639_1: string;
   name: string;
+}
+
+export interface Credits {
+  id: number;
+  cast: Cast[];
+  crew: Cast[];
+}
+
+export interface Cast {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: null | string;
+  cast_id?: number;
+  character?: string;
+  credit_id: string;
+  order?: number;
+  department?: string;
+  job?: string;
 }
