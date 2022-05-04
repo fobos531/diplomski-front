@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import screen from '@navigation/screens';
 import HomeStack from '@features/home/navigation/HomeStack';
+import WebRTCScreen from '@features/webrtc/WebRTCScreen';
 
 export type TabNavigatorParamList = {
   [screen.HOME_STACK]: undefined;
@@ -14,6 +15,7 @@ const TabNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="WebRTC" component={WebRTCScreen} />
         <Tab.Screen name={screen.HOME_STACK} component={HomeStack} />
       </Tab.Navigator>
     </SafeAreaView>
