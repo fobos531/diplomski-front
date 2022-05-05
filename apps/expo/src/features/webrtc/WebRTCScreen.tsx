@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { mediaDevices, MediaStream, RTCView } from 'react-native-webrtc';
 
-const HomeScreen: React.FC = () => {
+const WebRTCScreen: React.FC = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {
@@ -42,4 +42,4 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-export default HomeScreen;
+export default WebRTCScreen;
