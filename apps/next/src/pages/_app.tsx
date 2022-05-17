@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import { queryClient } from 'app/misc/queryClient';
 
 import '../../styles/globals.css';
+import DefaultLayout from '@common/layouts/DefaultLayout';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -16,7 +17,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
+        <DefaultLayout>
+          <Component {...pageProps} />
+        </DefaultLayout>
       </SessionProvider>
     </QueryClientProvider>
   );
