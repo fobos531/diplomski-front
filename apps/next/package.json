@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@livekit/react-components": "^1.0.0",
+    "@livekit/react-core": "^1.0.0",
     "app": "*",
     "dayjs": "^1.11.1",
     "next": "^12.1.5",
     "next-auth": "^4.3.3",
     "react-circular-progressbar": "^2.0.4",
+    "react-qrcode-logo": "^2.7.0",
     "react-query": "^3.38.0",
     "react-youtube": "^8.3.0",
     "socket.io-client": "^4.5.0",
