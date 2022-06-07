@@ -1,45 +1,142 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
-import { mediaDevices, MediaStream, RTCView } from 'react-native-webrtc';
+import * as React from 'react';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-const WebRTCScreen: React.FC = () => {
-  const [stream, setStream] = useState<MediaStream | null>(null);
+import { StyleSheet, View, FlatList, ListRenderItem, findNodeHandle, NativeModules } from 'react-native';
+//import type { RootStackParamList } from './App';
+import { useEffect, useState } from 'react';
+import { RoomControls } from './RoomControls';
+import { ParticipantView } from './ParticipantView';
+import { Participant, Room } from 'livekit-client';
+import { useRoom, useParticipant } from 'livekit-react-native';
+import type { TrackPublication } from 'livekit-client';
+import { Platform } from 'react-native';
+// @ts-ignore
+import { ScreenCapturePickerView } from 'react-native-webrtc';
+//import { startCallService, stopCallService } from './callservice/CallService';
 
+const RoomPage = ({ navigation, route }) => {
+  const [, setIsConnected] = useState(false);
+  const [room] = useState(
+    () =>
+      new Room({
+        publishDefaults: { simulcast: false },
+        adaptiveStream: true,
+      }),
+  );
+  const { participants } = useRoom(room);
+  // const { url, token } = route.params;
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InN0YXJrLXRvd2VyIn0sImlhdCI6MTY1NDU4NDIzMSwibmJmIjoxNjU0NTg0MjMxLCJleHAiOjE2NTQ2MDU4MzEsImlzcyI6IkFQSU05YnlSblI5S3RmUSIsInN1YiI6IkJPU1MyIiwianRpIjoiQk9TUzIifQ.hFA2x0Nf_MSj2XWvWPLtf-dz7qg6Wof-j8wRkCFutPQ';
+
+  const url = 'ws://192.168.1.5:7880';
+  // Connect to room.
   useEffect(() => {
-    let isFront = true;
-    mediaDevices.enumerateDevices().then((sourceInfos) => {
-      // console.log(sourceInfos);
-      let videoSourceId;
-      for (let i = 0; i < sourceInfos.length; i++) {
-        const sourceInfo = sourceInfos[i];
-        if (sourceInfo.kind == 'videoinput' && sourceInfo.facing == (isFront ? 'front' : 'environment')) {
-          videoSourceId = sourceInfo.deviceId;
-        }
+    room.connect(url, token, {}).then((r) => {
+      if (!r) {
+        console.log('failed to connect to ', url, ' ', token);
+        return;
       }
-      mediaDevices
-        .getUserMedia({
-          audio: true,
-          video: {
-            width: 640,
-            height: 480,
-            frameRate: 30,
-            facingMode: isFront ? 'user' : 'environment',
-            deviceId: videoSourceId,
-          },
-        })
-        .then((stream: MediaStream) => {
-          setStream(stream);
-          // Got stream!
-        })
-        .catch((error) => {
-          // Log error
-        });
+      console.log('connected to ', url, ' ', token);
+      setIsConnected(true);
     });
-  }, []);
+    return () => {
+      room.disconnect();
+    };
+  }, [url, token, room]);
+
+  // Perform platform specific call setup.
+  useEffect(() => {
+    // startCallService();
+    return () => {
+      // stopCallService();
+    };
+  }, [url, token, room]);
+
+  // Setup views.
+  const stageView = participants.length > 0 && <ParticipantView participant={participants[0]} style={styles.stage} />;
+
+  const renderParticipant: ListRenderItem<Participant> = ({ item }) => {
+    return <ParticipantView participant={item} style={styles.otherParticipantView} />;
+  };
+
+  const otherParticipantsView = participants.length > 0 && (
+    <FlatList
+      data={participants}
+      renderItem={renderParticipant}
+      keyExtractor={(item) => item.sid}
+      horizontal={true}
+      style={styles.otherParticipantsList}
+    />
+  );
+
+  const { cameraPublication, microphonePublication, screenSharePublication } = useParticipant(room.localParticipant);
+
+  // Prepare for iOS screenshare.
+  const screenCaptureRef = React.useRef(null);
+  const screenCapturePickerView = Platform.OS === 'ios' && <ScreenCapturePickerView ref={screenCaptureRef} />;
+  const startBroadcast = async () => {
+    if (Platform.OS === 'ios') {
+      const reactTag = findNodeHandle(screenCaptureRef.current);
+      await NativeModules.ScreenCapturePickerViewManager.show(reactTag);
+      room.localParticipant.setScreenShareEnabled(true);
+    } else {
+      room.localParticipant.setScreenShareEnabled(true);
+    }
+  };
 
   return (
-    <ScrollView style={{ flex: 1 }}>{stream && <RTCView streamURL={stream.toURL()} style={{ height: 300, width: '100%' }} />}</ScrollView>
+    <View style={styles.container}>
+      {stageView}
+      {otherParticipantsView}
+      <RoomControls
+        micEnabled={isTrackEnabled(microphonePublication)}
+        setMicEnabled={(enabled: boolean) => {
+          room.localParticipant.setMicrophoneEnabled(enabled);
+        }}
+        cameraEnabled={isTrackEnabled(cameraPublication)}
+        setCameraEnabled={(enabled: boolean) => {
+          room.localParticipant.setCameraEnabled(enabled);
+        }}
+        screenShareEnabled={isTrackEnabled(screenSharePublication)}
+        setScreenShareEnabled={(enabled: boolean) => {
+          if (enabled) {
+            startBroadcast();
+          } else {
+            room.localParticipant.setScreenShareEnabled(enabled);
+          }
+        }}
+        onDisconnectClick={() => {
+          navigation.pop();
+        }}
+      />
+      {screenCapturePickerView}
+    </View>
   );
 };
 
-export default WebRTCScreen;
+function isTrackEnabled(pub?: TrackPublication): boolean {
+  return !(pub?.isMuted ?? true);
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stage: {
+    flex: 1,
+    width: '100%',
+  },
+  otherParticipantsList: {
+    width: '100%',
+    height: 150,
+    flexGrow: 0,
+  },
+  otherParticipantView: {
+    width: 150,
+    height: 150,
+  },
+});
+
+export default RoomPage;
