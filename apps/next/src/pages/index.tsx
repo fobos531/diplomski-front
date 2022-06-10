@@ -3,17 +3,39 @@ import { NextPage } from 'next';
 import VideoBackground from '@features/home/VideoBackground';
 import Link from 'next/link';
 
+import { Button, Container, Text } from '@nextui-org/react';
+
 const Home: NextPage = () => {
   return (
-    <VideoBackground>
-      <div className="flex flex-col content-center">
-        <h1 className="text-white text-center">CineSimul</h1>
-        <h3 className="text-white text-center">Lose yourself in movies.</h3>
+    <Container display="flex" justify="center" alignItems="center" className="h-screen">
+      <div className="flex flex-col place-content-center">
+        <Text
+          h1
+          size={60}
+          css={{
+            textGradient: '45deg, $blue600 -20%, $pink600 50%',
+            textAlign: 'center',
+          }}
+          weight="bold">
+          CineSimul
+        </Text>
+        <Text
+          h1
+          size={60}
+          css={{
+            textGradient: '45deg, $yellow600 -20%, $red600 100%',
+            textAlign: 'center',
+          }}
+          weight="bold">
+          Lose yourself in movies.
+        </Text>
         <Link href="/home" passHref>
-          <button className="text-white">E boss</button>
+          <Button color="primary" shadow auto>
+            <Text>Let's go</Text>
+          </Button>
         </Link>
       </div>
-    </VideoBackground>
+    </Container>
   );
 };
 

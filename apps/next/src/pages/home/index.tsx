@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   const { data: trendingTVShows } = useQuery('trendingTVShows', () => getTrending('tv'));
 
   return (
-    <VideoBackground>
+    <>
       <h1 className="text-white">Trending movies</h1>
       <div className="overflow-x-auto flex-row flex">
         {trendingMovies?.results.map((title: Title) => (
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
           <TitleCard key={title.id} title={title} type="tv" />
         ))}
       </div>
-    </VideoBackground>
+    </>
   );
 };
 

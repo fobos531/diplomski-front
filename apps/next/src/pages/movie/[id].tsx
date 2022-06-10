@@ -13,6 +13,7 @@ import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
 import { Credits, Movie } from 'app/features/movies/types';
 import { getBackdropUrl, getPosterUrl, getProfileUrl } from 'app/misc/imgHelpers';
 import ImageSwiper from '@features/movie/components/ImageSwiper';
+import CastMember from '@features/movie/components/CastMember';
 
 interface MovieProps {
   movie: Movie;
@@ -48,13 +49,13 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
       </div>
       <ul className="overflow-x-scroll flex flex-row">
         {credits.cast.map((c) => (
-          <li key={c.id} className="flex-shrink-0 flex flex-col m-2">
-            <Image src={getProfileUrl(c.profile_path + '', 'h632')} width={200} height={300} className="rounded" />
-            <p className="self-center">{c.name}</p>
-          </li>
+          <CastMember key={c.id} member={c} />
         ))}
       </ul>
-
+      {/* <li key={c.id} className="flex-shrink-0 flex flex-col m-2">
+            <Image src={getProfileUrl(c.profile_path + '', 'h632')} width={200} height={300} className="rounded" />
+            <p className="self-center">{c.name}</p>
+          </li> */}
       <div>Media:</div>
       <ImageSwiper images={movie.images.posters} type="poster" />
 
