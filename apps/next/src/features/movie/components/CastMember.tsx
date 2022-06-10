@@ -10,17 +10,7 @@ interface CastMemberProps {
 
 const CastMember: React.FC<CastMemberProps> = ({ member }) => {
   return (
-    <Card css={{ h: '300px', w: '200px', flexShrink: 0 }}>
-      {/*  <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-        <Col>
-          <Text size={12} weight="bold" transform="uppercase" color="#9E9E9E">
-            Your day your way
-          </Text>
-          <Text h3 color="white">
-            Your checklist for better sleep
-          </Text>
-        </Col>
-      </Card.Header> */}
+    <Card css={{ h: '250px', w: '150px', flexShrink: 0, marginRight: 20 }}>
       <Card.Body css={{ p: 0 }}>
         <Card.Image src={getProfileUrl(member.profile_path + '', 'h632')} objectFit="cover" width="100%" height="100%" alt={member.name} />
       </Card.Body>

@@ -19,7 +19,7 @@ interface ImageSwiperProps {
 const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, type }) => {
   const imgs = useMemo(() => {
     if (type === 'backdrop') {
-      return images.map((img) => getBackdropUrl(img.file_path, 'w1280'));
+      return images.map((img) => getBackdropUrl(img.file_path, 'w780'));
     }
     if (type === 'logo') return images.map((img) => getLogoUrl(img.file_path, 'w500'));
     if (type === 'poster') return images.map((img) => getPosterUrl(img.file_path, 'w780'));
@@ -30,7 +30,7 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, type }) => {
   return (
     <Swiper
       // install Swiper modules
-      modules={[Navigation, Pagination, Scrollbar, A11y, EffectCards]}
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
       effect="cards"
       spaceBetween={20}
       slidesPerView={3}
@@ -38,8 +38,8 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({ images, type }) => {
       onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => console.log('slide change')}>
       {imgs.map((img) => (
-        <SwiperSlide key={img}>
-          <Image src={img} alt={''} width={'100%'} height={100} className="rounded" layout="responsive" objectFit="cover" />
+        <SwiperSlide key={img} style={{ width: 250, height: 300 }}>
+          <Image src={img} alt={''} width={50} height={50} className="rounded" layout="responsive" objectFit="cover" />
         </SwiperSlide>
       ))}
     </Swiper>

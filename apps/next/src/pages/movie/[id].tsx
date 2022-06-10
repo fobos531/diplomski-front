@@ -47,6 +47,7 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
           />
         </div>
       </div>
+      <div>Cast</div>
       <ul className="overflow-x-scroll flex flex-row">
         {credits.cast.map((c) => (
           <CastMember key={c.id} member={c} />
