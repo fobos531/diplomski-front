@@ -1,12 +1,13 @@
 import * as React from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
 
-import { StyleSheet, View, FlatList, ListRenderItem, findNodeHandle, NativeModules } from 'react-native';
+import { StyleSheet, View, FlatList, ListRenderItem, findNodeHandle, NativeModules, Text, TouchableOpacity } from 'react-native';
 //import type { RootStackParamList } from './App';
 import { useEffect, useState } from 'react';
 import { RoomControls } from './RoomControls';
 import { ParticipantView } from './ParticipantView';
-import { Participant, Room } from 'livekit-client';
+import { Participant, Room, RoomEvent, DataPacket_Kind } from 'livekit-client';
 import { useRoom, useParticipant } from 'livekit-react-native';
 import type { TrackPublication } from 'livekit-client';
 import { Platform } from 'react-native';
@@ -15,6 +16,13 @@ import { ScreenCapturePickerView } from 'react-native-webrtc';
 //import { startCallService, stopCallService } from './callservice/CallService';
 
 const RoomPage = ({ navigation, route }) => {
+  const [playing, setPlaying] = useState(false);
+  const ytRef = React.useRef<YoutubeIframeRef>(null);
+
+  const handleSeek = () => {
+    ytRef.current?.seekTo(100, true);
+  };
+
   const [, setIsConnected] = useState(false);
   const [room] = useState(
     () =>
@@ -26,9 +34,12 @@ const RoomPage = ({ navigation, route }) => {
   const { participants } = useRoom(room);
   // const { url, token } = route.params;
   const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InN0YXJrLXRvd2VyIn0sImlhdCI6MTY1NDU4NDIzMSwibmJmIjoxNjU0NTg0MjMxLCJleHAiOjE2NTQ2MDU4MzEsImlzcyI6IkFQSU05YnlSblI5S3RmUSIsInN1YiI6IkJPU1MyIiwianRpIjoiQk9TUzIifQ.hFA2x0Nf_MSj2XWvWPLtf-dz7qg6Wof-j8wRkCFutPQ';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InN0YXJrLXRvd2VyIn0sImlhdCI6MTY1NDg1MzgyOCwibmJmIjoxNjU0ODUzODI4LCJleHAiOjE2NTQ4NzU0MjgsImlzcyI6IkFQSTJOS1pmYkpCZzYzdyIsInN1YiI6IkJPU1MzIiwianRpIjoiQk9TUzMifQ.lKQNBxB5b6EvXZD5pc8dZ3E0SnLvXIcjJ8OmYAFpynQ';
 
-  const url = 'ws://192.168.1.5:7880';
+  const url = 'wss://livekit.cinesimul.xyz';
+
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
   // Connect to room.
   useEffect(() => {
     room.connect(url, token, {}).then((r) => {
@@ -38,11 +49,17 @@ const RoomPage = ({ navigation, route }) => {
       }
       console.log('connected to ', url, ' ', token);
       setIsConnected(true);
+      room.on(RoomEvent.DataReceived, (data) => {
+        const decoder = new TextDecoder();
+        const halo = decoder.decode(data);
+        console.log('HALO', halo);
+        handleSeek();
+      });
     });
     return () => {
       room.disconnect();
     };
-  }, [url, token, room]);
+  }, []);
 
   // Perform platform specific call setup.
   useEffect(() => {
@@ -50,7 +67,7 @@ const RoomPage = ({ navigation, route }) => {
     return () => {
       // stopCallService();
     };
-  }, [url, token, room]);
+  }, []);
 
   // Setup views.
   const stageView = participants.length > 0 && <ParticipantView participant={participants[0]} style={styles.stage} />;
@@ -86,8 +103,9 @@ const RoomPage = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {stageView}
-      {otherParticipantsView}
+      {/* {stageView}
+      {otherParticipantsView} */}
+
       <RoomControls
         micEnabled={isTrackEnabled(microphonePublication)}
         setMicEnabled={(enabled: boolean) => {
@@ -110,6 +128,15 @@ const RoomPage = ({ navigation, route }) => {
         }}
       />
       {screenCapturePickerView}
+      <TouchableOpacity
+        onPress={() => {
+          const strData = JSON.stringify({ some: 'data' });
+          const encoder = new TextEncoder();
+          room.localParticipant.publishData(encoder.encode(strData), DataPacket_Kind.RELIABLE);
+        }}>
+        <Text>BOSS</Text>
+      </TouchableOpacity>
+      <YoutubePlayer ref={ytRef} height={300} width={400} play={playing} videoId={'xwjwCFZpdns'} onChangeState={() => {}} />
     </View>
   );
 };

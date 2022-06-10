@@ -1,5 +1,6 @@
 import { registerRootComponent } from 'expo';
 import { registerGlobals } from 'livekit-react-native';
+import 'fast-text-encoding';
 
 import App from './App';
 
