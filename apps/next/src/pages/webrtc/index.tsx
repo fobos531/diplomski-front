@@ -4,7 +4,7 @@ import { Room, DataPacket_Kind, RoomEvent } from 'livekit-client';
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 
-async function onConnected(room) {
+async function onConnected(room: Room) {
   await room.localParticipant.setCameraEnabled(true);
   await room.localParticipant.setMicrophoneEnabled(true);
 }
