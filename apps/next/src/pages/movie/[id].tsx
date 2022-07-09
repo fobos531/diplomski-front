@@ -3,6 +3,7 @@ import { QRCode } from 'react-qrcode-logo';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import duration from 'dayjs/plugin/duration';
+import { Text } from '@nextui-org/react';
 
 dayjs.extend(duration);
 
@@ -24,30 +25,45 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
   return (
     <div>
       {/*       TODO: // Fix gradient fade */}
-      <div style={{ height: 400, position: 'relative' }} className="bg-gradient-to-r from-purple-500 to-pink-500">
-        <Image src={getBackdropUrl(movie.backdrop_path, 'w1280')} alt="Movie poster" layout="fill" className="absolute" />
-      </div>
-
-      <div className="flex flex-row">
-        <Image src={getPosterUrl(movie.poster_path, 'w780')} alt="Movie poster" width={300} height={450} className="rounded" />
-        <div>
-          <div>{movie.title || movie.original_title || movie.original_name}</div>
-          <div>{dayjs(movie.release_date).format('MMM DD, YYYY')}</div>
-          <div>Genres: {movie.genres.map((g) => g.name).join(' ')}</div>
-          <div>Status: {movie.status}</div>
-
-          <div>Runtime: {dayjs.duration({ minutes: movie.runtime }).asHours()}h</div>
-          <div>Average rating: {movie.vote_average}</div>
-          <CircularProgressbar
-            value={movie.vote_average}
-            minValue={1}
-            maxValue={10}
-            text={movie.vote_average.toString()}
-            styles={{ root: { width: 150, height: 150 } }}
+      <div style={{ position: 'relative' }} className="flex flex-row  py-8">
+        <div className="blur">
+          <Image src={getBackdropUrl(movie.backdrop_path, 'w1280')} alt="Movie poster" layout="fill" className="absolute" />
+        </div>
+        <div className="ml-10">
+          <Image
+            src={getPosterUrl(movie.poster_path, 'w780')}
+            alt="Movie poster"
+            width={300}
+            height={450}
+            className="rounded"
+            style={{ boxShadow: 'inherit' }}
           />
         </div>
+        <div className="flex flex-row z-30 ml-3">
+          <div>
+            <Text color="white" weight="bold">
+              {movie.title || movie.original_title || movie.original_name}
+            </Text>
+            <Text color="white">{dayjs(movie.release_date).format('MMM DD, YYYY')}</Text>
+            <Text color="white">Genres: {movie.genres.map((g) => g.name).join(' ')}</Text>
+            <Text color="white">Status: {movie.status}</Text>
+
+            <Text color="white">Runtime: {dayjs.duration({ minutes: movie.runtime }).asHours().toFixed(2)} h</Text>
+            <Text color="white">Average rating: {movie.vote_average}</Text>
+            <CircularProgressbar
+              value={movie.vote_average}
+              minValue={1}
+              maxValue={10}
+              text={movie.vote_average.toString()}
+              styles={{ root: { width: 115, height: 115 } }}
+            />
+          </div>
+        </div>
       </div>
-      <div>Cast</div>
+
+      <Text h1 weight="bold" className="my-5">
+        Cast
+      </Text>
       <ul className="overflow-x-scroll flex flex-row">
         {credits.cast.map((c) => (
           <CastMember key={c.id} member={c} />
@@ -57,7 +73,9 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
             <Image src={getProfileUrl(c.profile_path + '', 'h632')} width={200} height={300} className="rounded" />
             <p className="self-center">{c.name}</p>
           </li> */}
-      <div>Media:</div>
+      <Text h1 weight="bold" className="my-5">
+        Media
+      </Text>
       <ImageSwiper images={movie.images.posters} type="poster" />
 
       <QRCode
