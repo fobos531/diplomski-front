@@ -3,6 +3,8 @@ import { NextPage } from 'next';
 import { Room, DataPacket_Kind, RoomEvent } from 'livekit-client';
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
+import { Text } from '@nextui-org/react';
+import { useRouter } from 'next/router';
 
 async function onConnected(room: Room) {
   await room.localParticipant.setCameraEnabled(true);
@@ -12,7 +14,7 @@ async function onConnected(room: Room) {
 const WebRTCPage: NextPage = () => {
   const url = 'wss://livekit.cinesimul.xyz';
 
-  const [token, setToken] = useState('');
+  const { query } = useRouter();
   const [room, setRoom] = useState<Room | null>(null);
   const ytRef = useRef<YouTube>(null);
 
@@ -31,32 +33,30 @@ const WebRTCPage: NextPage = () => {
   const data = encoder.encode(strData);
 
   const token2 =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InN0YXJrLXRvd2VyIn0sImlhdCI6MTY1NDcxOTY2NywibmJmIjoxNjU0NzE5NjY3LCJleHAiOjE2NTQ3NDEyNjcsImlzcyI6IkFQSTJOS1pmYkpCZzYzdyIsInN1YiI6IkJPU1MzIiwianRpIjoiQk9TUzMifQ.RuaKmoEsi5GifCSFwzQkYmjYhfMEFy2y9ddI8Az2lYU';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2aWRlbyI6eyJyb29tSm9pbiI6dHJ1ZSwicm9vbSI6InN0YXJrLXRvd2VyIn0sImlhdCI6MTY1NzQ1NTMxNiwibmJmIjoxNjU3NDU1MzE2LCJleHAiOjE2NTc0NzY5MTYsImlzcyI6IkFQSTJOS1pmYkpCZzYzdyIsInN1YiI6IkJPU1MzIiwianRpIjoiQk9TUzMifQ.w7srTIrAvYclKg8z7xCpDGlHonIFBJuj7oqct_Pr12c';
   return (
     <>
-      <button onClick={() => setToken(token1)}>token1</button>
-      <br />
-      <button onClick={() => setToken(token2)}>token2</button>
-      <button onClick={() => handleSeek()}>handle seek</button>
+      <Text h1 weight="bold" className="text-center">
+        Chat session
+      </Text>
 
       <br />
       {room && <button onClick={() => room.localParticipant.publishData(data, DataPacket_Kind.RELIABLE)}>publish</button>}
 
       <div className="roomContainer">
-        {token && (
-          <LiveKitRoom
-            url={url}
-            token={token}
-            onConnected={(room) => {
-              setRoom(room);
-              onConnected(room);
-              room.on(RoomEvent.DataReceived, (data) => {
-                console.log('DATA', data);
-                handleSeek();
-              });
-            }}
-          />
-        )}
+        <LiveKitRoom
+          url={url}
+          token={query.token as string}
+          onConnected={(room) => {
+            setRoom(room);
+            onConnected(room);
+            room.on(RoomEvent.DataReceived, (data) => {
+              console.log('DATA', data);
+              handleSeek();
+            });
+          }}
+        />
+        x
       </div>
       <YouTube videoId={'xwjwCFZpdns'} ref={ytRef} />
     </>

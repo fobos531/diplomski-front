@@ -15,6 +15,8 @@ import { Credits, Movie } from 'app/features/movies/types';
 import { getBackdropUrl, getPosterUrl, getProfileUrl } from 'app/misc/imgHelpers';
 import ImageSwiper from '@features/movie/components/ImageSwiper';
 import CastMember from '@features/movie/components/CastMember';
+import { getToken } from 'app/features/webrtc/api';
+import { useRouter } from 'next/router';
 
 interface MovieProps {
   movie: Movie;
@@ -22,6 +24,8 @@ interface MovieProps {
 }
 
 const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
+  const router = useRouter();
+
   return (
     <div>
       {/*       TODO: // Fix gradient fade */}
@@ -77,6 +81,14 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
         Media
       </Text>
       <ImageSwiper images={movie.images.posters} type="poster" />
+
+      <button
+        onClick={async () => {
+          const token = await getToken();
+          router.push(`/webrtc?token=${token}`);
+        }}>
+        Zapocni sesiju
+      </button>
 
       <QRCode
         value="https://github.com/gcoro/react-qrcode-logo"
