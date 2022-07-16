@@ -17,6 +17,7 @@ import ImageSwiper from '@features/movie/components/ImageSwiper';
 import CastMember from '@features/movie/components/CastMember';
 import { getToken } from 'app/features/webrtc/api';
 import { useRouter } from 'next/router';
+import VideosList from '@features/movie/components/VideosList';
 
 interface MovieProps {
   movie: Movie;
@@ -26,13 +27,13 @@ interface MovieProps {
 const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
   const router = useRouter();
 
+  console.log('ALO', getBackdropUrl(movie.backdrop_path, 'w1280'));
+
   return (
     <div>
       {/*       TODO: // Fix gradient fade */}
-      <div style={{ position: 'relative' }} className="flex flex-row  py-8">
-        <div className="blur">
-          <Image src={getBackdropUrl(movie.backdrop_path, 'w1280')} alt="Movie poster" layout="fill" className="absolute" />
-        </div>
+      <div style={{ position: 'relative' }} className="flex flex-row py-8">
+        <Image src={getBackdropUrl(movie.backdrop_path, 'w1280')} alt="Movie poster" layout="fill" className="blur" />
         <div className="ml-10">
           <Image
             src={getPosterUrl(movie.poster_path, 'w780')}
@@ -81,6 +82,11 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
         Media
       </Text>
       <ImageSwiper images={movie.images.posters} type="poster" />
+
+      {/* Videos */}
+      <div className="my-4">
+        <VideosList videos={movie.videos.results} />
+      </div>
 
       <button
         onClick={async () => {
