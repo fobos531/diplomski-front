@@ -74,10 +74,7 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
           <CastMember key={c.id} member={c} />
         ))}
       </ul>
-      {/* <li key={c.id} className="flex-shrink-0 flex flex-col m-2">
-            <Image src={getProfileUrl(c.profile_path + '', 'h632')} width={200} height={300} className="rounded" />
-            <p className="self-center">{c.name}</p>
-          </li> */}
+
       <Text h1 weight="bold" className="my-5">
         Media
       </Text>
@@ -87,14 +84,6 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
       <div className="my-4">
         <VideosList videos={movie.videos.results} />
       </div>
-
-      <button
-        onClick={async () => {
-          const token = await getToken();
-          router.push(`/webrtc?token=${token}`);
-        }}>
-        Zapocni sesiju
-      </button>
 
       <QRCode
         value="https://github.com/gcoro/react-qrcode-logo"

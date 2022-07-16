@@ -58,7 +58,7 @@ const WebRTCPage: NextPage = () => {
         />
         x
       </div>
-      <YouTube videoId={'xwjwCFZpdns'} ref={ytRef} />
+      <YouTube videoId={`${query.videoId}`} ref={ytRef} />
     </>
   );
 };
