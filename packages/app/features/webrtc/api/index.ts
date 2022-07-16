@@ -1,7 +1,9 @@
 import api from 'app/api';
 
-export const getToken = async () => {
-  const response = await api.get('/live/token');
+export const joinRoom = async (roomName?: string) => {
+  const response = await api.post('/live/join', {
+    roomName,
+  });
 
   return response.data.token;
 };

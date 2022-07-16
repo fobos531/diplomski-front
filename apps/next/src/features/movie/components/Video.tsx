@@ -3,7 +3,7 @@ import YouTube from 'react-youtube';
 import { useRouter } from 'next/router';
 
 import { Video as VideoType } from 'app/features/movies/types';
-import { getToken } from 'app/features/webrtc/api';
+import { joinRoom } from 'app/features/webrtc/api';
 
 interface VideoProps {
   video: VideoType;
@@ -13,7 +13,7 @@ const Video: React.FC<VideoProps> = ({ video }) => {
   const router = useRouter();
 
   const onClickWatch = async () => {
-    const token = await getToken();
+    const token = await joinRoom(video.id);
     router.push(`/webrtc?videoId=${video.key}&token=${token}`);
   };
 
