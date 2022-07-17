@@ -7,6 +7,13 @@ import { QRCode } from 'react-qrcode-logo';
 import { Text } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
+// CSS should be explicitly imported if using the default UI
+import '@livekit/react-components/dist/index.css';
+// used by the default ParticipantView to maintain video aspect ratio.
+// this CSS must be imported globally
+// if you are using a custom Participant renderer, this import isn't necessary.
+import 'react-aspect-ratio/aspect-ratio.css';
+
 async function onConnected(room: Room) {
   await room.localParticipant.setCameraEnabled(true);
   await room.localParticipant.setMicrophoneEnabled(true);
@@ -44,7 +51,7 @@ const WebRTCPage: NextPage = () => {
       <br />
       {room && <button onClick={() => room.localParticipant.publishData(data, DataPacket_Kind.RELIABLE)}>publish</button>}
 
-      <div className="roomContainer">
+      <div>
         <LiveKitRoom
           url={url}
           token={query.token as string}
@@ -57,7 +64,6 @@ const WebRTCPage: NextPage = () => {
             });
           }}
         />
-        x
       </div>
       <YouTube videoId={`${query.videoId}`} ref={ytRef} />
 
