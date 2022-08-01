@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         </Text>
         <Link href="/home" passHref>
           <Button color="primary" shadow auto>
-            <Text>Let`&apos;`s go</Text>
+            <Text>Lets go</Text>
           </Button>
         </Link>
       </div>

@@ -5,7 +5,7 @@ import Carousel from 'react-native-reanimated-carousel';
 import { useQuery } from 'react-query';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { YoutubeIframeRef } from 'react-native-youtube-iframe';
+import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
 
 import { CastMember } from '@features/movies/components';
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
@@ -28,6 +28,8 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
   const handleSeek = () => {
     ytRef.current?.seekTo(10, true);
   };
+
+  console.log('MOVIE ', movie?.images.backdrops);
 
   return (
     <ScrollView>
@@ -60,45 +62,53 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
             showsHorizontalScrollIndicator={false}
           />
 
-          <Text style={{ fontSize: fontSize.large }}>Backdrops</Text>
+          {movie.images.backdrops.length > 0 && (
+            <>
+              <Text style={{ fontSize: fontSize.large }}>Backdrops</Text>
 
-          <Carousel
-            height={200}
-            width={300}
-            style={{ width: '100%', marginLeft: 20 }}
-            pagingEnabled
-            snapEnabled
-            customConfig={() => ({ type: 'positive', viewCount: 10 })}
-            mode="horizontal-stack"
-            modeConfig={{
-              snapDirection: 'right',
-              stackInterval: 18,
-            }}
-            data={movie.images.backdrops}
-            renderItem={({ item }) => (
-              <Image source={{ uri: getBackdropUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />
-            )}
-          />
+              <Carousel
+                height={200}
+                width={300}
+                style={{ width: '100%', marginLeft: 20, flex: 1 }}
+                pagingEnabled
+                snapEnabled
+                customConfig={() => ({ type: 'positive', viewCount: 10 })}
+                mode="horizontal-stack"
+                modeConfig={{
+                  snapDirection: 'right',
+                  stackInterval: 18,
+                }}
+                data={movie.images.backdrops}
+                renderItem={({ item }) => (
+                  <Image source={{ uri: getBackdropUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />
+                )}
+              />
+            </>
+          )}
 
-          <Text style={{ fontSize: fontSize.large }}>Posters</Text>
+          {movie.images.posters.length > 0 && (
+            <>
+              <Text style={{ fontSize: fontSize.large }}>Posters</Text>
 
-          <Carousel
-            height={200}
-            width={300}
-            style={{ width: '100%', marginLeft: 20 }}
-            pagingEnabled
-            snapEnabled
-            customConfig={() => ({ type: 'positive', viewCount: 10 })}
-            mode="horizontal-stack"
-            modeConfig={{
-              snapDirection: 'right',
-              stackInterval: 18,
-            }}
-            data={movie.images.backdrops}
-            renderItem={({ item }) => (
-              <Image source={{ uri: getBackdropUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />
-            )}
-          />
+              <Carousel
+                height={200}
+                width={300}
+                style={{ width: '100%', marginLeft: 20 }}
+                pagingEnabled
+                snapEnabled
+                customConfig={() => ({ type: 'positive', viewCount: 10 })}
+                mode="horizontal-stack"
+                modeConfig={{
+                  snapDirection: 'right',
+                  stackInterval: 18,
+                }}
+                data={movie.images.posters}
+                renderItem={({ item }) => (
+                  <Image source={{ uri: getBackdropUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />
+                )}
+              />
+            </>
+          )}
 
           {/*   <Carousel
             height={200}
@@ -116,12 +126,26 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
             renderItem={({ item }) => <Image source={{ uri: getPosterUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />}
           /> */}
 
-          {/* <Carousel
-            height={200}
-            width={300}
-            data={movie.videos.results}
-            renderItem={({ item }) => <YoutubePlayer height={300} videoId={item.key} onChangeState={() => {}} />}
-          /> */}
+          {movie.videos.results.length > 0 && (
+            <>
+              <Text style={{ fontSize: fontSize.large }}>Videos</Text>
+              <Carousel
+                height={200}
+                width={300}
+                style={{ width: '100%', marginLeft: 20 }}
+                pagingEnabled
+                snapEnabled
+                customConfig={() => ({ type: 'positive', viewCount: 10 })}
+                mode="horizontal-stack"
+                modeConfig={{
+                  snapDirection: 'right',
+                  stackInterval: 18,
+                }}
+                data={movie.videos.results.splice(0, 5)}
+                renderItem={({ item }) => <YoutubePlayer height={300} videoId={item.key} onChangeState={() => {}} />}
+              />
+            </>
+          )}
 
           <TouchableOpacity onPress={() => setPlaying(!playing)}>
             <Text>Toggle play/pause</Text>
