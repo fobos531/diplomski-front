@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 
-import VideoBackground from '@features/home/VideoBackground';
 import Link from 'next/link';
 
 import { Button, Container, Text } from '@nextui-org/react';
