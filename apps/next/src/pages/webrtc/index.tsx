@@ -51,7 +51,7 @@ const WebRTCPage: NextPage = () => {
       <br />
       {room && <button onClick={() => room.localParticipant.publishData(data, DataPacket_Kind.RELIABLE)}>publish</button>}
 
-      <div>
+      <div className="roomContainer">
         <LiveKitRoom
           url={url}
           token={query.token as string}
