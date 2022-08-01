@@ -13,6 +13,9 @@
         "simulator": true
       },
       "distribution": "internal"
+    },
+    "staging": {
+      "distribution": "internal"
     }
   },
   "submit": {}
