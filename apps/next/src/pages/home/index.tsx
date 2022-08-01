@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import { useQuery } from 'react-query';
 
-import VideoBackground from '@features/home/VideoBackground';
 import { getTrending } from 'app/features/titles/api/titles';
 import TitleCard from '@features/home/components/TitleCard';
 import { Title } from 'app/features/titles/types';
