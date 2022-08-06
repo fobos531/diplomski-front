@@ -9,9 +9,7 @@ import TabNavigator from '@navigation/TabNavigator';
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Navigation>
-        <TabNavigator />
-      </Navigation>
+      <Navigation />
     </QueryClientProvider>
   );
 };

@@ -1,7 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { useAtom } from 'jotai';
 
-const Navigation = ({ children }) => {
-  return <NavigationContainer>{children}</NavigationContainer>;
+import { userAtom } from '@features/auth/store';
+import TabNavigator from './TabNavigator';
+import GuestStack from '@features/auth/navigation/GuestStack';
+
+const Navigation = () => {
+  const [user] = useAtom(userAtom);
+
+  return <NavigationContainer>{user ? <TabNavigator /> : <GuestStack />}</NavigationContainer>;
 };
 
 export default Navigation;
