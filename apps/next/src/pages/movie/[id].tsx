@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import duration from 'dayjs/plugin/duration';
 import { Text } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 
 dayjs.extend(duration);
 
@@ -61,6 +62,9 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
               text={movie.vote_average.toString()}
               styles={{ root: { width: 115, height: 115 } }}
             />
+            <Button color="primary" shadow auto>
+              Add to watchlist
+            </Button>
           </div>
         </div>
       </div>
