@@ -20,15 +20,16 @@ const TabNavigator = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen
-          name="WebRTC"
-          component={WebRTCScreen}
-          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="md-globe" size={size} color={color} /> }}
-        />
-        <Tab.Screen
           name={screen.HOME_STACK}
           component={HomeStack}
           options={{ tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} /> }}
         />
+        <Tab.Screen
+          name="WebRTC"
+          component={WebRTCScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="md-globe" size={size} color={color} /> }}
+        />
+
         {/*         <Tab.Screen name={screen.SEARCH_STACK} component={SearchStack} /> */}
 
         <Tab.Screen
