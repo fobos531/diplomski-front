@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
+import CircularProgress from 'react-native-circular-progress-indicator';
 
 import { CastMember } from '@features/movies/components';
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
@@ -49,6 +50,7 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
               <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{movie.title || movie.original_title || movie.original_name}</Text>
               <Text>Released: {dayjs(movie.release_date).format('MMM DD, YYYY')}</Text>
               <Text style={{ flex: 1 }}>Overview: {movie.overview}</Text>
+              <CircularProgress value={movie.vote_average} maxValue={10} />
             </View>
           </View>
 
