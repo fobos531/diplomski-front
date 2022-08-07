@@ -3,10 +3,11 @@ import { Text, ScrollView, TouchableOpacity, ImageBackground, Image, StyleSheet,
 import { BlurView } from 'expo-blur';
 import Carousel from 'react-native-reanimated-carousel';
 import { useQuery } from 'react-query';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { joinRoom } from 'app/features/webrtc/api';
 
 import { CastMember } from '@features/movies/components';
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
@@ -16,6 +17,7 @@ import { HomeNavigatorParamList } from '@features/home/navigation/HomeStack';
 import screen from '@navigation/screens';
 import { fontSize } from '@constants/typography';
 import Spacer from '@common/Spacer';
+import { Video } from 'app/features/movies/types';
 
 interface MovieScreenProps {}
 
@@ -24,13 +26,15 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
   const { data: movie } = useQuery(['movie', params.id], () => getMovie(params.id));
   const { data: movieCredits } = useQuery(['movieCredits', params.id], () => getMovieCredits(params.id));
   const [playing, setPlaying] = useState(false);
-  const ytRef = useRef<YoutubeIframeRef>(null);
-
-  const handleSeek = () => {
-    ytRef.current?.seekTo(10, true);
-  };
+  const navigation = useNavigation();
 
   console.log('MOVIE ', movie?.images.backdrops);
+
+  const onPressVideo = async (video: Video) => {
+    const token = await joinRoom(video.id);
+
+    navigation.navigate(screen.WEBRTC, { videoId: video.key, token });
+  };
 
   return (
     <ScrollView>
@@ -112,22 +116,6 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
             </>
           )}
 
-          {/*   <Carousel
-            height={200}
-            width={300}
-            style={{ width: '100%', marginLeft: 20 }}
-            pagingEnabled
-            snapEnabled
-            customConfig={() => ({ type: 'positive', viewCount: 10 })}
-            mode="horizontal-stack"
-            modeConfig={{
-              snapDirection: 'right',
-              stackInterval: 18,
-            }}
-            data={movie.images.posters}
-            renderItem={({ item }) => <Image source={{ uri: getPosterUrl(item.file_path, 'w780') }} style={{ width: 300, height: 200 }} />}
-          /> */}
-
           {movie.videos.results.length > 0 && (
             <>
               <Text style={{ fontSize: fontSize.large }}>Videos</Text>
@@ -144,17 +132,16 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
                   stackInterval: 18,
                 }}
                 data={movie.videos.results.splice(0, 5)}
-                renderItem={({ item }) => <YoutubePlayer height={300} videoId={item.key} onChangeState={() => {}} />}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => onPressVideo(item)}>
+                    <View pointerEvents="none">
+                      <YoutubePlayer height={300} videoId={item.key} onChangeState={() => {}} />
+                    </View>
+                  </TouchableOpacity>
+                )}
               />
             </>
           )}
-
-          <TouchableOpacity onPress={() => setPlaying(!playing)}>
-            <Text>Toggle play/pause</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSeek}>
-            <Text>Toggle seek</Text>
-          </TouchableOpacity>
         </>
       )}
     </ScrollView>

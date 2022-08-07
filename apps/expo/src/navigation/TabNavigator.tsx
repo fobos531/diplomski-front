@@ -11,6 +11,10 @@ export type TabNavigatorParamList = {
   [screen.HOME_STACK]: undefined;
   [screen.SEARCH_STACK]: undefined;
   [screen.MENU]: undefined;
+  [screen.WEBRTC]: {
+    videoId: string;
+    token: string;
+  };
 };
 
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();
@@ -25,7 +29,7 @@ const TabNavigator = () => {
           options={{ tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} /> }}
         />
         <Tab.Screen
-          name="WebRTC"
+          name={screen.WEBRTC}
           component={WebRTCScreen}
           options={{ tabBarIcon: ({ color, size }) => <Ionicons name="md-globe" size={size} color={color} /> }}
         />

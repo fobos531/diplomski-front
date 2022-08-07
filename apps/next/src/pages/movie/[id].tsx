@@ -16,7 +16,6 @@ import { getBackdropUrl, getPosterUrl, getProfileUrl } from 'app/misc/imgHelpers
 import ImageSwiper from '@features/movie/components/ImageSwiper';
 import CastMember from '@features/movie/components/CastMember';
 import { joinRoom } from 'app/features/webrtc/api';
-import { useRouter } from 'next/router';
 import VideosList from '@features/movie/components/VideosList';
 
 interface MovieProps {
@@ -25,10 +24,6 @@ interface MovieProps {
 }
 
 const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
-  const router = useRouter();
-
-  console.log('ALO', getBackdropUrl(movie.backdrop_path, 'w1280'));
-
   return (
     <div>
       {/*       TODO: // Fix gradient fade */}

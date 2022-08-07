@@ -5,6 +5,7 @@ enum screen {
   SEARCH = 'Search',
   LOGIN = 'Login',
   MENU = 'Menu',
+  WEBRTC = 'WebRTC',
 
   HOME_STACK = 'HomeStack',
   SEARCH_STACK = 'SearchStack',
