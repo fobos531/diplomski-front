@@ -81,7 +81,7 @@ const Movie: NextPage<MovieProps> = ({ movie, credits }) => {
       <Text h1 weight="bold" className="my-5">
         Media
       </Text>
-      <ImageSwiper images={movie.images.posters} type="poster" />
+      <ImageSwiper images={movie.images.posters.slice(0, 4)} type="poster" />
 
       {/* Videos */}
       <div className="my-4">
