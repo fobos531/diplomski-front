@@ -13,7 +13,7 @@ const Video: React.FC<VideoProps> = ({ video }) => {
   const router = useRouter();
 
   const onClickWatch = async () => {
-    const token = await joinRoom(video.id);
+    const token = await joinRoom(video.key);
     router.push(`/webrtc?videoId=${video.key}&token=${token}`);
   };
 

@@ -28,10 +28,8 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
   const [playing, setPlaying] = useState(false);
   const navigation = useNavigation();
 
-  console.log('MOVIE ', movie?.images.backdrops);
-
   const onPressVideo = async (video: Video) => {
-    const token = await joinRoom(video.id);
+    const token = await joinRoom(video.key);
 
     navigation.navigate(screen.WEBRTC, { videoId: video.key, token });
   };
