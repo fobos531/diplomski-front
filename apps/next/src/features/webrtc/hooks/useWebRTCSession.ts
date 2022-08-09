@@ -6,7 +6,7 @@ const useWebRTCSession = ({ ytRef, token }: { ytRef: RefObject<YouTube>; token: 
   const url = 'wss://livekit.cinesimul.xyz';
 
   const [room, setRoom] = useState<Room | null>(null);
-  const [sequence, setSequence] = useState([]);
+  const [sequence, setSequence] = useState<any>([]);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
   const [who, setWho] = useState<'me' | 'them' | null>(null);
 
@@ -65,7 +65,7 @@ const useWebRTCSession = ({ ytRef, token }: { ytRef: RefObject<YouTube>; token: 
     }
   };
 
-  const isSubArrayEnd = (A, B) => {
+  const isSubArrayEnd = (A: any[], B: any[]) => {
     if (A.length < B.length) return false;
     let i = 0;
     while (i < B.length) {
@@ -84,6 +84,7 @@ const useWebRTCSession = ({ ytRef, token }: { ytRef: RefObject<YouTube>; token: 
       handleSeek(event.target.getCurrentTime()); // Arrow keys seek
       setSequence([]); // Reset event sequence
     } else {
+      //@ts-ignore
       clearTimeout(timer); // Cancel previous event
       if (type !== 3) {
         // If we're not buffering,

@@ -9,6 +9,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import { Movie } from 'app/features/movies/types';
 import { getBackdropUrl, getPosterUrl } from 'app/misc/imgHelpers';
 import { watchlistAtom } from '@features/watchlist/store';
+import { Title } from 'app/features/titles/types';
 
 interface BasicInfoSectionProps {
   movie: Movie;
@@ -53,6 +54,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ movie }) => {
             shadow
             auto
             onClick={() => {
+              //@ts-ignore
               setWatchList([...watchList, movie]);
             }}>
             Add to watchlist

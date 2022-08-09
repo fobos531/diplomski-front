@@ -1,23 +1,17 @@
 import { GetServerSideProps, NextPage } from 'next';
 import dayjs from 'dayjs';
-import Image from 'next/image';
 import duration from 'dayjs/plugin/duration';
 import { Text } from '@nextui-org/react';
-import { Button } from '@nextui-org/react';
 
 dayjs.extend(duration);
 
-import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
 import { Credits, Movie } from 'app/features/movies/types';
-import { getBackdropUrl, getPosterUrl } from 'app/misc/imgHelpers';
 import ImageSwiper from '@features/movie/components/ImageSwiper';
 import CastMember from '@features/movie/components/CastMember';
 import VideosList from '@features/movie/components/VideosList';
-import { useAtom } from 'jotai';
-import { watchlistAtom } from '@features/watchlist/store';
 import BasicInfoSection from '@features/movie/components/BasicInfoSection';
 
 interface MovieProps {
