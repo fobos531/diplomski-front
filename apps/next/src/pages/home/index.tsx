@@ -11,17 +11,17 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1 className="text-white">Trending movies</h1>
+      <h1>Trending movies</h1>
       <div className="overflow-x-auto flex-row flex">
         {trendingMovies?.results.map((title: Title) => (
-          <TitleCard key={title.id} title={title} type="movie" />
+          <TitleCard key={title.id} title={title} />
         ))}
       </div>
 
-      <h1 className="text-white">Trending TV Shows</h1>
+      <h1>Trending TV Shows</h1>
       <div className="overflow-x-auto flex-row flex">
         {trendingTVShows?.results.map((title: Title) => (
-          <TitleCard key={title.id} title={title} type="tv" />
+          <TitleCard key={title.id} title={title} />
         ))}
       </div>
     </>

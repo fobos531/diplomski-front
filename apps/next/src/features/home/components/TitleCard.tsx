@@ -5,11 +5,10 @@ import { getPosterUrl } from 'app/misc/imgHelpers';
 
 interface TitleCardProps {
   title: Title;
-  type: 'movie' | 'tv';
 }
 
-const TitleCard: React.FC<TitleCardProps> = ({ title, type }) => {
-  const url = `/${type}/${title.id}`;
+const TitleCard: React.FC<TitleCardProps> = ({ title }) => {
+  const url = `/${title.media_type}/${title.id}`;
 
   return (
     <Link href={url} passHref>

@@ -22,7 +22,7 @@ const TrendingList: React.FC<TrendingListProps> = ({ type }) => {
       <FlatList
         data={data?.results || []}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <TitleCard title={item} type={type} />}
+        renderItem={({ item }) => <TitleCard title={item} />}
         horizontal
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

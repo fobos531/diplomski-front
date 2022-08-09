@@ -1,13 +1,19 @@
 import React from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import * as Avatar from '@radix-ui/react-avatar';
+import { useRouter } from 'next/router';
 
 const TopBar: React.FunctionComponent = () => {
   const { data } = useSession();
+  const router = useRouter();
+
+  const handleOpenWatchList = () => {
+    router.push('/watchlist');
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <button onClick={handleOpenWatchList}>My watchlist</button>
       <div style={{ display: 'flex', flexDirection: 'row', marginRight: 10 }}>
         {data ? (
           <>

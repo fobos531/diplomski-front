@@ -7,14 +7,13 @@ import screen from '@navigation/screens';
 
 interface TitleCardProps {
   title: Title;
-  type: 'movie' | 'tv';
 }
 
-const TitleCard: React.FC<TitleCardProps> = ({ title, type }) => {
+const TitleCard: React.FC<TitleCardProps> = ({ title }) => {
   const navigation = useNavigation();
 
   const handleNavigate = () => {
-    if (type === 'movie') {
+    if (title.media_type === 'movie') {
       navigation.navigate(screen.MOVIE, { id: title.id });
     } else {
       navigation.navigate(screen.TV, { id: title.id });
