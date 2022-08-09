@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { Text } from '@nextui-org/react';
@@ -17,6 +17,25 @@ interface BasicInfoSectionProps {
 
 const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ movie }) => {
   const [watchList, setWatchList] = useAtom(watchlistAtom);
+
+  const watchlistButtonText = useMemo(() => {
+    const exists = watchList.find((title: Title) => title.id === movie.id);
+
+    if (exists) {
+      return 'Remove from watchlist';
+    }
+    return 'Add to watchlist';
+  }, [movie.id, watchList]);
+
+  const onClickWatchListButton = useCallback(() => {
+    const exists = watchList.find((title: Title) => title.id === movie.id);
+    if (exists) {
+      setWatchList(watchList.filter((title: Title) => title.id !== movie.id));
+    } else {
+      //@ts-ignore
+      setWatchList([...watchList, movie]);
+    }
+  }, [movie, setWatchList, watchList]);
 
   return (
     <div style={{ position: 'relative' }} className="flex flex-row py-8">
@@ -49,15 +68,8 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ movie }) => {
             text={movie.vote_average.toString()}
             styles={{ root: { width: 115, height: 115 } }}
           />
-          <Button
-            color="primary"
-            shadow
-            auto
-            onClick={() => {
-              //@ts-ignore
-              setWatchList([...watchList, movie]);
-            }}>
-            Add to watchlist
+          <Button color="primary" shadow auto onClick={onClickWatchListButton}>
+            {watchlistButtonText}
           </Button>
         </div>
       </div>
