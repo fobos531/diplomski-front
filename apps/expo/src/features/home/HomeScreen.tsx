@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ScrollView } from 'react-native';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import * as Google from 'expo-auth-session/providers/google';
-import { Button } from 'react-native';
-import * as AuthSession from 'expo-auth-session';
-import axios from 'axios';
 
+import Spacer from '@common/components/Spacer';
 import { TrendingList } from './components';
-import Spacer from '@common/Spacer';
 
 const HomeScreen: React.FC = () => {
   return (

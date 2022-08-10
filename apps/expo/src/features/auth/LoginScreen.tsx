@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { userAtom } from './store';
 import { TokenResponse } from 'expo-auth-session';
 import axios from 'axios';
+import { storage } from '@common/storage';
 
 interface LoginScreenProps {}
 
@@ -13,11 +14,12 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
     iosClientId: process.env.GOOGLE_AUTH_IOS_CLIENT_ID,
   });
 
-  const [user, setUser] = useAtom(userAtom);
+  const [_, setUser] = useAtom(userAtom);
 
   useEffect(() => {
     const signIn = async (res: TokenResponse) => {
       const info = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${res.accessToken}`);
+      storage.set('auth', res.accessToken);
 
       setUser({
         id: info.data.sub,

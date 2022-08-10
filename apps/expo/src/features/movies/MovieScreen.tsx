@@ -5,18 +5,18 @@ import Carousel from 'react-native-reanimated-carousel';
 import { useQuery } from 'react-query';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import YoutubePlayer, { YoutubeIframeRef } from 'react-native-youtube-iframe';
+import YoutubePlayer from 'react-native-youtube-iframe';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { joinRoom } from 'app/features/webrtc/api';
 
 import { CastMember } from '@features/movies/components';
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
 import { getBackdropUrl, getPosterUrl } from 'app/misc/imgHelpers';
+import Spacer from '@common/components/Spacer';
 
 import { HomeNavigatorParamList } from '@features/home/navigation/HomeStack';
 import screen from '@navigation/screens';
 import { fontSize } from '@constants/typography';
-import Spacer from '@common/Spacer';
 import { Video } from 'app/features/movies/types';
 
 interface MovieScreenProps {}
