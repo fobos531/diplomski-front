@@ -18,6 +18,7 @@ const MenuScreen: React.FC<MenuScreenProps> = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>{user?.name}</Text>
+      <Button title="Watchlist" onPress={() => {}} />
       <Button title="Sign Out" onPress={handleSignOut} />
     </View>
   );

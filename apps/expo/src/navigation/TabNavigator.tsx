@@ -2,15 +2,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import screen from '@navigation/screens';
 import HomeStack from '@features/home/navigation/HomeStack';
 import WebRTCScreen from '@features/webrtc/WebRTCScreen';
-import MenuScreen from '@features/menu/MenuScreen';
+import MenuStack from '@features/menu/navigation/MenuStack';
+
+import screen from '@navigation/screens';
 
 export type TabNavigatorParamList = {
   [screen.HOME_STACK]: undefined;
   [screen.SEARCH_STACK]: undefined;
-  [screen.MENU]: undefined;
+  [screen.MENU_STACK]: undefined;
   [screen.WEBRTC]: {
     videoId: string;
     token: string;
@@ -37,8 +38,8 @@ const TabNavigator = () => {
         {/*         <Tab.Screen name={screen.SEARCH_STACK} component={SearchStack} /> */}
 
         <Tab.Screen
-          name={screen.MENU}
-          component={MenuScreen}
+          name={screen.MENU_STACK}
+          component={MenuStack}
           options={{ tabBarIcon: ({ color, size }) => <Ionicons name="menu" size={size} color={color} /> }}
         />
       </Tab.Navigator>

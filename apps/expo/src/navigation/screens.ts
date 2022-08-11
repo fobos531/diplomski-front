@@ -6,9 +6,11 @@ enum screen {
   LOGIN = 'Login',
   MENU = 'Menu',
   WEBRTC = 'WebRTC',
+  WATCHLIST = 'WatchList',
 
   HOME_STACK = 'HomeStack',
   SEARCH_STACK = 'SearchStack',
+  MENU_STACK = 'MenuStack',
 }
 
 export default screen;

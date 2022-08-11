@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Text, ScrollView, TouchableOpacity, ImageBackground, Image, StyleSheet, View, FlatList } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, Button, Image, View, FlatList } from 'react-native';
 import { BlurView } from 'expo-blur';
 import Carousel from 'react-native-reanimated-carousel';
 import { useQuery } from 'react-query';
@@ -9,7 +9,7 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { joinRoom } from 'app/features/webrtc/api';
 
-import { CastMember } from '@features/movies/components';
+import { BasicInfoSection, CastMember } from '@features/movies/components';
 import { getMovie, getMovieCredits } from 'app/features/movies/api/movies';
 import { getBackdropUrl, getPosterUrl } from 'app/misc/imgHelpers';
 import Spacer from '@common/components/Spacer';
@@ -38,23 +38,7 @@ const MovieScreen: React.FunctionComponent<MovieScreenProps> = () => {
     <ScrollView>
       {movie && (
         <>
-          <View style={{ height: 200 }}>
-            <ImageBackground source={{ uri: getBackdropUrl(movie.backdrop_path, 'w780') }} style={StyleSheet.absoluteFill} />
-            <BlurView style={{ flex: 1 }} intensity={10} />
-          </View>
-
-          <View style={{ flexDirection: 'row' }}>
-            <Image
-              source={{ uri: getPosterUrl(movie.poster_path, 'w342') }}
-              style={{ width: 150, height: 240, borderRadius: 10, marginRight: 10 }}
-            />
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{movie.title || movie.original_title || movie.original_name}</Text>
-              <Text>Released: {dayjs(movie.release_date).format('MMM DD, YYYY')}</Text>
-              <Text style={{ flex: 1 }}>Overview: {movie.overview}</Text>
-              <CircularProgress value={movie.vote_average} maxValue={10} />
-            </View>
-          </View>
+          <BasicInfoSection movie={movie} />
 
           <Text style={{ fontSize: fontSize.large }}>Cast</Text>
           <FlatList
