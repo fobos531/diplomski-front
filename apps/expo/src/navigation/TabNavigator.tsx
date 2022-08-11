@@ -27,7 +27,7 @@ const TabNavigator = () => {
         <Tab.Screen
           name={screen.HOME_STACK}
           component={HomeStack}
-          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} /> }}
+          options={{ title: 'Home', tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} /> }}
         />
         <Tab.Screen
           name={screen.WEBRTC}
@@ -40,7 +40,7 @@ const TabNavigator = () => {
         <Tab.Screen
           name={screen.MENU_STACK}
           component={MenuStack}
-          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="menu" size={size} color={color} /> }}
+          options={{ title: 'Menu', tabBarIcon: ({ color, size }) => <Ionicons name="menu" size={size} color={color} /> }}
         />
       </Tab.Navigator>
     </SafeAreaView>

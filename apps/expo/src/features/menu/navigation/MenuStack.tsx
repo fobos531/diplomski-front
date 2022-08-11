@@ -8,6 +8,7 @@ import screen from '@navigation/screens';
 
 export type MenuStackParamList = {
   [screen.MENU]: undefined;
+  [screen.WATCHLIST]: undefined;
 };
 
 const Stack = createNativeStackNavigator<MenuStackParamList>();
