@@ -17,14 +17,16 @@ const Navigation = () => {
     const restoreAuth = async () => {
       const auth = storage.getString('auth');
       if (auth) {
-        const info = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${auth}`);
+        try {
+          const info = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${auth}`);
 
-        setUser({
-          id: info.data.sub,
-          name: info.data.name,
-          email: info.data.email,
-          picture: info.data.picture,
-        });
+          setUser({
+            id: info.data.sub,
+            name: info.data.name,
+            email: info.data.email,
+            picture: info.data.picture,
+          });
+        } catch {}
       }
 
       setIsRestoring(false);
