@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
-import { search } from 'app/features/search/api';
+import { searchMovies } from 'app/features/search/api';
 
-const useLinksSearch = () => {
+const useMoviesSearch = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchQueryDebounced] = useDebounce(searchQuery, 400);
+  const [searchQueryDebounced] = useDebounce(searchQuery, 1000);
 
   const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    'search',
+    ['searchMovies', searchQueryDebounced],
     ({ pageParam = 1 }) =>
-      search({
+      searchMovies({
         query: searchQueryDebounced,
         page: pageParam,
       }),
@@ -29,8 +29,8 @@ const useLinksSearch = () => {
     fetchNextPage,
     searchQuery,
     setSearchQuery,
-    data: data?.pages.flatMap((p) => p.data),
+    data: data?.pages.flatMap((p) => p.data) || [],
   };
 };
 
-export default useLinksSearch;
+export default useMoviesSearch;

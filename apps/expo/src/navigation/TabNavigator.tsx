@@ -7,6 +7,7 @@ import WebRTCScreen from '@features/webrtc/WebRTCScreen';
 import MenuStack from '@features/menu/navigation/MenuStack';
 
 import screen from '@navigation/screens';
+import SearchStack from '@features/search/navigation/SearchStack';
 
 export type TabNavigatorParamList = {
   [screen.HOME_STACK]: undefined;
@@ -35,7 +36,11 @@ const TabNavigator = () => {
           options={{ tabBarIcon: ({ color, size }) => <Ionicons name="md-globe" size={size} color={color} /> }}
         />
 
-        {/*         <Tab.Screen name={screen.SEARCH_STACK} component={SearchStack} /> */}
+        <Tab.Screen
+          name={screen.SEARCH_STACK}
+          component={SearchStack}
+          options={{ title: 'Search', tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} /> }}
+        />
 
         <Tab.Screen
           name={screen.MENU_STACK}
