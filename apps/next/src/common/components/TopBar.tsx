@@ -11,9 +11,19 @@ const TopBar: React.FunctionComponent = () => {
     router.push('/watchlist');
   };
 
+  const handleOpenSearch = () => {
+    router.push('/search');
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <button onClick={handleOpenWatchList}>My watchlist</button>
+      {data && (
+        <div>
+          <button onClick={handleOpenWatchList}>My watchlist</button>
+          <button onClick={handleOpenSearch}>Search</button>
+        </div>
+      )}
+
       <div style={{ display: 'flex', flexDirection: 'row', marginRight: 10 }}>
         {data ? (
           <>
@@ -34,8 +44,6 @@ const TopBar: React.FunctionComponent = () => {
       </div>
     </div>
   );
-
-  return <></>;
 };
 
 export default TopBar;

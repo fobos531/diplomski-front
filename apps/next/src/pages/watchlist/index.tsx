@@ -5,7 +5,7 @@ import { watchlistAtom } from '@features/watchlist/store';
 import { Title } from 'app/features/titles/types';
 import TitleCard from '@features/home/components/TitleCard';
 
-const Home: NextPage = () => {
+const WatchList: NextPage = () => {
   const [watchlist] = useAtom(watchlistAtom);
 
   return (
@@ -21,4 +21,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default WatchList;
